@@ -119,7 +119,7 @@ public void buildWorkflow() {
     String ref_gen_gc_path = " ";
 
     // make a new tumor directory
-    Job tumorLinkJob = this.getWorkflow().createBashJob("tumor_link_job").setMaxMemory("5000").setThreads(1);
+    Job tumorLinkJob = this.getWorkflow().createBashJob("tumor_link_job").setMaxMemory("120000").setThreads(30);
     tumorLinkJob.getCommand().addArgument("mkdir -p "+datastore+"/delly_tumor_bams \n ");
 
     // deal with multi-tumor, in which case the input_bam_path_tumor key value is comma-separated
@@ -210,7 +210,7 @@ public void buildWorkflow() {
 
     //7 jobs per downloaded BAM pair (DELLY,DUPPY,INVY,JUMPY, 3xCOV)
 
-    Job dellyJob = this.getWorkflow().createBashJob("delly_job").setMaxMemory("20000").setThreads(2);
+    Job dellyJob = this.getWorkflow().createBashJob("delly_job").setMaxMemory("120000").setThreads(30);
     dellyJob.getCommand().addArgument("/usr/bin/time --format=\"Wall_s %e\\nUser_s %U\\nSystem_s %S\\nMax_kb %M\" --output=" + outputFileDellyTime)
         .addArgument(delly_bin)
         .addArgument("-t DEL")
@@ -256,7 +256,7 @@ public void buildWorkflow() {
 
 
     //DUPPY
-    Job duppyJob = this.getWorkflow().createBashJob("duppy_job").setMaxMemory("16000").setThreads(2);
+    Job duppyJob = this.getWorkflow().createBashJob("duppy_job").setMaxMemory("120000").setThreads(30);
     duppyJob.getCommand().addArgument("/usr/bin/time --format=\"Wall_s %e\\nUser_s %U\\nSystem_s %S\\nMax_kb %M\" --output=" + outputFileDuppyTime)
         .addArgument(delly_bin)
         .addArgument("-t DUP")
@@ -301,7 +301,7 @@ public void buildWorkflow() {
 
 
     //INVY
-    Job invyJob = this.getWorkflow().createBashJob("invy_job").setMaxMemory("16000").setThreads(2);
+    Job invyJob = this.getWorkflow().createBashJob("invy_job").setMaxMemory("120000").setThreads(30);
     invyJob.getCommand().addArgument("/usr/bin/time --format=\"Wall_s %e\\nUser_s %U\\nSystem_s %S\\nMax_kb %M\" --output=" + outputFileInvyTime)
         .addArgument(delly_bin)
         .addArgument("-t INV")
@@ -344,7 +344,7 @@ public void buildWorkflow() {
 
 
     //JUMPY
-    Job jumpyJob = this.getWorkflow().createBashJob("jumpy_job").setMaxMemory("6000").setThreads(2);
+    Job jumpyJob = this.getWorkflow().createBashJob("jumpy_job").setMaxMemory("120000").setThreads(30);
     jumpyJob.getCommand().addArgument("/usr/bin/time --format=\"Wall_s %e\\nUser_s %U\\nSystem_s %S\\nMax_kb %M\" --output=" + outputFileJumpyTime)
         .addArgument(delly_bin)
         .addArgument("-t TRA")
@@ -385,7 +385,7 @@ public void buildWorkflow() {
 
 
     //COV + plot jobs
-    Job covJobGerm1 = this.getWorkflow().createBashJob("cov_job_germ1").setMaxMemory("14000").setThreads(2);
+    Job covJobGerm1 = this.getWorkflow().createBashJob("cov_job_germ1").setMaxMemory("120000").setThreads(30);
     covJobGerm1.getCommand().addArgument("/usr/bin/time --format=\"Wall_s %e\\nUser_s %U\\nSystem_s %S\\nMax_kb %M\" --output=" + outputFileCovGerm1Time)
         .addArgument(cov_bin)
         .addArgument("-s 1000")
@@ -396,7 +396,7 @@ public void buildWorkflow() {
     // add the tumorLinkJob job
     covJobGerm1.addParent(tumorLinkJob);
 
-    Job covJobGerm2 = this.getWorkflow().createBashJob("cov_job_germ2").setMaxMemory("14000").setThreads(2);
+    Job covJobGerm2 = this.getWorkflow().createBashJob("cov_job_germ2").setMaxMemory("120000").setThreads(30);
     covJobGerm2.getCommand().addArgument("/usr/bin/time --format=\"Wall_s %e\\nUser_s %U\\nSystem_s %S\\nMax_kb %M\" --output=" + outputFileCovGerm2Time)
         .addArgument(cov_bin)
         .addArgument("-s 10000")
@@ -415,7 +415,7 @@ public void buildWorkflow() {
     covJobGerm3.addParent(covJobGerm2);
 
 
-    Job covJobTumor1 = this.getWorkflow().createBashJob("cov_job_tumor1").setMaxMemory("14000").setThreads(2);
+    Job covJobTumor1 = this.getWorkflow().createBashJob("cov_job_tumor1").setMaxMemory("120000").setThreads(30);
     covJobTumor1.getCommand().addArgument("/usr/bin/time --format=\"Wall_s %e\\nUser_s %U\\nSystem_s %S\\nMax_kb %M\" --output=" + outputFileCovTumor1Time)
         .addArgument(cov_bin)
         .addArgument("-s 1000")
@@ -426,7 +426,7 @@ public void buildWorkflow() {
     // add the tumorLinkJob job
     covJobTumor1.addParent(tumorLinkJob);
 
-    Job covJobTumor2 = this.getWorkflow().createBashJob("cov_job_tumor2").setMaxMemory("14000").setThreads(2);
+    Job covJobTumor2 = this.getWorkflow().createBashJob("cov_job_tumor2").setMaxMemory("120000").setThreads(30);
     covJobTumor2.getCommand().addArgument("/usr/bin/time --format=\"Wall_s %e\\nUser_s %U\\nSystem_s %S\\nMax_kb %M\" --output=" + outputFileCovTumor2Time)
         .addArgument(cov_bin)
         .addArgument("-s 10000")
