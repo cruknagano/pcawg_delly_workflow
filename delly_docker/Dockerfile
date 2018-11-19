@@ -20,6 +20,8 @@ RUN for i in cleanup.sh cov cov_plot.pl cov_v0.5.6_linux_x86_64bit cov_v0.5.6_pa
 RUN echo 'install.packages("/usr/bin/DNAcopy_1.38.1.tar.gz")' >> /tmp/dnacopy; R CMD BATCH /tmp/dnacopy
 
 ENV GOSU_VERSION 1.10
+ENV threads 30
+ENV maxMemory 100
 RUN set -x \
     && apt-get update && apt-get install -y --no-install-recommends ca-certificates wget && rm -rf /var/lib/apt/lists/* \
     && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
