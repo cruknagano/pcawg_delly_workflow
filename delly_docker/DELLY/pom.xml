@@ -36,13 +36,7 @@
             <version>${seqware-version}</version>
             <classifier>full</classifier>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>sysinternals</groupId>
-            <artifactId>junction</artifactId>
-            <version>1.04</version>
-        </dependency>
-   
+        </dependency>  
     </dependencies>
 
     <repositories>
@@ -73,11 +67,6 @@
             <name>SeqWare Dependencies Maven Repository</name>
             <url>http://seqwaremaven.oicr.on.ca/artifactory/seqware-dependencies</url>
         </repository>     
-        <repository>
-            <id>dependencies.sysinternals</id>
-            <name>Broad Junction repo</name>
-            <url>http://raw.githubusercontent.com/broadgsa/gatk/master/public/repo</url>
-        </repository>          
     </repositories>
 
     <build>
